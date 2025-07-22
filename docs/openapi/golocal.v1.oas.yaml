@@ -21,6 +21,7 @@ paths:
       summary: Delete pages from a pdf
       parameters:
         - $ref: "#/components/parameters/pdfPages"
+        - $ref: "#/components/parameters/pdfFileName"
       requestBody:
         content:
           application/pdf:
@@ -52,6 +53,12 @@ components:
       required: true
       schema:
         type: string
+    pdfFileName:
+      in: header
+      name: X-Filename
+      description: "name of the file to be processed"
+      example: "golocal.pdf"
+      required: false
   responses:
     Error:
       description: Error

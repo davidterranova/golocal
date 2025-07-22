@@ -1,0 +1,69 @@
+openapi: 3.0.3
+info:
+  title: Golocal API
+  description: Golocal OpenAPI spec
+  version: 1.0.0
+  contact: 
+    name: david terranova
+    email: davidp.terranova@gmail.com
+servers:
+  - url: http://localhost:8080/v1
+    description: Localhost
+tags:
+  - name: "pdf"
+    description: "local pdf service"
+paths:
+  /pdf/pages/{pdfPages}/delete:
+    post:
+      operationId: deletePDFPages
+      tags:
+        - pdf
+      summary: Delete pages from a pdf
+      parameters:
+        - $ref: "#/components/parameters/pdfPages"
+      requestBody:
+        content:
+          application/pdf:
+            schema:
+              type: string
+              format: binary
+      responses:
+        "200":
+          description: "Operation completed successfully"
+          content:
+            application/pdf:
+              schema:
+                type: string
+                format: binary
+        "500":
+          description: "Internal Server Error"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    
+components:
+  parameters:
+    pdfPages:
+      in: path
+      name: pdfPages
+      description: "list of pages to process"
+      example: "1,2,3"
+      required: true
+      schema:
+        type: string
+  responses:
+    Error:
+      description: Error
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+  schemas:
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+        error:
+          type: string
